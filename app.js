@@ -11,7 +11,7 @@ const adminRouter = require('./routes/admin');
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views/layouts'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -47,7 +47,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('layouts/error');
 });
 
 module.exports = app;
