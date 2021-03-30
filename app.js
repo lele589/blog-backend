@@ -11,7 +11,7 @@ const adminRouter = require('./routes/admin');
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/layouts'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -26,8 +26,7 @@ app.use(sassMiddleware({
   indentedSyntax: false, // true = .sass and false = .scss
   sourceMap: true,
   debug: true,
-  outputStyle: 'compressed',
-  force: true
+  outputStyle: 'compressed'
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
