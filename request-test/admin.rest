@@ -14,3 +14,22 @@ POST http://localhost:3000/admin/posts/create
 
 ###
 POST http://localhost:3000/admin/posts/delete
+
+###
+POST http://localhost:3000/admin/users/register
+Content-Type: application/json
+
+{
+    "username" : "Admin",
+    "email" : "admin@admin.com",
+    "password" : "admin123"
+}
+
+###
+POST http://localhost:3000/admin/users/login
+Content-Type: application/json
+
+{
+    "email" : "admin@admin.com",
+    "password" : "admin123"
+}
