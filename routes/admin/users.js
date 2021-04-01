@@ -5,6 +5,12 @@ const bcrypt = require('bcryptjs');
 const dayjs = require('dayjs');
 const jwt = require('jsonwebtoken');
 
+//GET
+//# route => /admin/users/login
+router.get('/login', (req, res) => {
+    res.render('pages/login');
+});
+
 // POST
 //# route => /admin/users/register
 router.post('/register', [
@@ -42,25 +48,28 @@ router.post('/register', [
 // POST
 //# route => /admin/users/login
 router.post('/login', (req, res) => {
-  User.findOne({ email: req.body.email })
-      .then(user => {
-         if (user) {
-           const samePass = bcrypt.compareSync(req.body.password, user.password);
-           if (samePass) {
-                  res.json({ 
-                      success: 'Login correcto',
-                      token: createToken(user)
-                  });
+    const { email, password } = req.body;
+    if(email && password) {
+        User.findOne({ email: email })
+          .then(user => {
+             if (user) {
+               const samePass = bcrypt.compareSync(req.body.password, user.password);
+               if (samePass) {
+                    res.cookie('username' , user.username);
+                    res.redirect('/admin/posts');
+                  } else {
+                    res.render('pages/login', { error: 'El email/password es incorrecto' });
+                  }
               } else {
-                  res.json({ error: 'El email/password es incorrecto 2'});
+                res.render('pages/login', { error: 'El email/password es incorrecto' });
               }
-          } else {
-              res.json({ error: 'El email/password es incorrecto 1'});
-          }
-      })
-      .catch(error => {
-          res.json({ error: error.message })
-      })
+          })
+          .catch(error => {
+            res.render('pages/login', { error: error.message });
+          })
+    } else {
+        res.render('pages/login', { error: 'Debes rellenar los campos' });
+    }
 });
 
 function createToken(user) {

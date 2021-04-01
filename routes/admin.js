@@ -5,7 +5,7 @@ const usersAdminRouter = require('./admin/users');
 // GET
 //# route => /admin
 router.get('/', (req, res) => {
-  res.render('pages/login');
+  res.redirect('/admin/users/login');
 });
 
 router.use('/posts', postsAdminRouter);

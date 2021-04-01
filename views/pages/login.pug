@@ -8,11 +8,23 @@ block content
                     .card-header
                         h3.text-center.font-weight-light.my-4 Acceso
                     .card-body
-                        form
+                        form.needs-validation(action="/admin/users/login", method="POST" novalidate)
                             .form-group
                                 label.small.mb-1(for='inputEmailAddress') Email
-                                input#inputEmailAddress.form-control.py-4(type='email', placeholder='Tu email')
+                                input#inputEmailAddress.form-control.py-4(
+                                    autocomplete='email', 
+                                    type='email', 
+                                    name='email', 
+                                    placeholder='Tu email')
                             .form-group
                                 label.small.mb-1(for='inputPassword') Contraseña
-                                input#inputPassword.form-control.py-4(type='password', placeholder='Tu contraseña')
-                            a.btn.btn-primary.btn-block(href='/admin/posts') Acceder
+                                input#inputPassword.form-control.py-4(
+                                    autocomplete='current-password', 
+                                    type='password', 
+                                    name='password', 
+                                    placeholder='Tu contraseña')
+                            if error
+                                p
+                                    small.text-danger= error
+                            button.btn.btn-primary.btn-block(type="submit", value="Acceder") Acceder
+
