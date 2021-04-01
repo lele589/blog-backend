@@ -5,68 +5,47 @@ nav(class=['sb-sidenav', 'accordion'] class=sidenavStyle)#sidenavAccordion
         .nav
     
             .sb-sidenav-menu-heading
-                | Core
+                | Posts
         
-            a.nav-link(href='index.html')
+            a.nav-link(href='/admin/posts')
                 .sb-nav-link-icon
-                    i.fas.fa-tachometer-alt
-                | Dashboard
+                    i.fas.fa-list-alt
+                | Listado de posts
+            a.nav-link(href='/admin/posts/new')
+                .sb-nav-link-icon
+                    i.fas.fa-file-alt
+                | Crear post
                 
             .sb-sidenav-menu-heading
-                | Interface
+                | Users
+            a.nav-link(href='#')
+                .sb-nav-link-icon
+                    i.fas.fa-list-alt
+                | Listado de usuarios
+            a.nav-link(href='#')
+                .sb-nav-link-icon
+                    i.fas.fa-user-alt
+                | Crear usuario
 
-            a.nav-link.collapsed(href='#', data-toggle='collapse' data-target='#collapseLayouts' aria-expanded='false' aria-controls='collapseLayouts')
-                .sb-nav-link-icon
-                    i.fas.fa-columns
-                | Layouts
-                .sb-sidenav-collapse-arrow
-                    i.fas.fa-angle-down
-            #collapseLayouts.collapse(aria-labelledby='headingOne', data-parent='#sidenavAccordion')
-                nav.sb-sidenav-menu-nested.nav
-                    a.nav-link(href='layout-static.html') Static Navigation
-                    a.nav-link(href='layout-sidenav-light.html') Light Sidenav
-            
-            a.nav-link.collapsed(href='#', data-toggle='collapse' data-target='#collapsePages' aria-expanded='false' aria-controls='collapsePages')
-                .sb-nav-link-icon
-                    i.fas.fa-book-open
-                | Pages
-                .sb-sidenav-collapse-arrow
-                    i.fas.fa-angle-down
-            #collapsePages.collapse(aria-labelledby='headingTwo', data-parent='#sidenavAccordion')
-                nav.sb-sidenav-menu-nested.nav.accordion#sidenavAccordionPages
-                    a.nav-link.collapsed(href='#', data-toggle='collapse' data-target='#pagesCollapseAuth' aria-expanded='false' aria-controls='pagesCollapseAuth')
-                        | Authentication
-                        .sb-sidenav-collapse-arrow
-                            i.fas.fa-angle-down
-                    #pagesCollapseAuth.collapse(aria-labelledby='headingOne', data-parent='#sidenavAccordionPages')
-                        nav.sb-sidenav-menu-nested.nav
-                            a.nav-link(href='login.html') Login
-                            a.nav-link(href='register.html') Register
-                            a.nav-link(href='password.html') Forgot Password
-                    a.nav-link.collapsed(href='#', data-toggle='collapse' data-target='#pagesCollapseError' aria-expanded='false' aria-controls='pagesCollapseError')
-                        | Error
-                        .sb-sidenav-collapse-arrow
-                            i.fas.fa-angle-down
-                    #pagesCollapseError.collapse(aria-labelledby='headingOne', data-parent='#sidenavAccordionPages')
-                        nav.sb-sidenav-menu-nested.nav
-                            a.nav-link(href='401.html') 401 Page
-                            a.nav-link(href='404.html') 404 Page
-                            a.nav-link(href='500.html') 500 Page
-                            
             .sb-sidenav-menu-heading
-                | Addons
+                | Ajustes
             
-            a.nav-link(href='charts.html')
+            a.nav-link(href='#')
                 .sb-nav-link-icon
                     i.fas.fa-chart-area
-                | Charts
-                
-            a.nav-link(href='tables.html')
+                | Editar perfil
+
+            a.nav-link(href='#')
                 .sb-nav-link-icon
-                    i.fas.fa-table
-                | Tables
+                    i.fas.fa-chart-area
+                | Mis posts    
+                
+            a.nav-link(href='#')
+                .sb-nav-link-icon
+                    i.fas.fa-sign-out-alt
+                | Cerrar sesión
                         
-    .sb-sidenav-footer
-        
-        .small Logged in as:
-        | Start Bootstrap
+    if username
+        .sb-sidenav-footer
+            .small Has accedido como:
+            h6= username
