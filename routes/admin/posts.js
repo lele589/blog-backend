@@ -3,7 +3,7 @@ const router = require('express').Router();
 // GET
 //# route => /admin/posts
 router.get('/', function(req, res, next) {
-    res.send('Listado de post');
+    res.render('pages/posts/list', { username: req.cookies.username});
 });
 
 //# route => /admin/posts/new
