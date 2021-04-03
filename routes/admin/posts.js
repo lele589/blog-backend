@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const dayjs = require('dayjs');
 
 // GET
 //# route => /admin/posts
@@ -8,7 +9,8 @@ router.get('/', function(req, res, next) {
 
 //# route => /admin/posts/new
 router.get('/new', function(req, res, next) {
-    res.send('Form para crear un post');
+    const currentDate = dayjs().format('DD/MM/YYYY');
+    res.render('pages/posts/new', { currentDate });
 });
 
 //# route => /admin/posts/edit/:idPost
