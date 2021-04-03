@@ -1,0 +1,122 @@
+extends ../../layouts/dashboard.pug
+
+block config
+    - var bodyClass = 'sb-nav-fixed'
+    - var pageTitle = title ? title : 'Post';
+    - var breadcrumb = false;
+    - var sidenavStyle = 'sb-sidenav-dark'
+
+block content
+    .container-fluid
+        include ../includes/page-header.pug
+        .row 
+            .col-12.pt-3 
+                form#form-new.needs-validation(action=postUrl method="POST")
+                    .form-group
+                        label.font-weight-bold.mb-1(for='title') Título *
+                        input#title.form-control.py-4(
+                            required
+                            type='text' 
+                            name='title' 
+                            value=post.title && post.title
+                            placeholder='Añade un título')
+                    .form-group 
+                        label.font-weight-bold.mb-1(for='category') Categoría *
+                        .input-group
+                            .input-group-prepend
+                                .input-group-text Opciones
+                            select#category.custom-select.custom-select-md(
+                                name="category" required)
+                                option(selected disabled, value="") Elige la categoría
+                                option(value="ruta") Ruta
+                                option(value="deporte") Deporte
+                                option(value="gastronomia") Gastronomía
+                                option(value="cultura") Cultura
+                    .form-group
+                        label.font-weight-bold.mb-1(for='image') Imagen
+                        .input-group
+                            .input-group-prepend
+                                .input-group-text 
+                                    i.fas.fa-image
+                            input#image.form-control.py-4(
+                                type='url' 
+                                name='image' 
+                                value=post.image && post.image
+                                pattern="https?://.+"
+                                placeholder='Añade la url de la imagen')
+                    .form-group
+                        label.font-weight-bold.mb-1(for='location') Localización *
+                        .input-group
+                            .input-group-prepend
+                                .input-group-text 
+                                    i.fas.fa-map-marker-alt
+                            input#location.form-control.py-4(
+                                required
+                                type='url' 
+                                value=post.location && post.location
+                                name='location' 
+                                placeholder='Añade la url de Google Maps')
+                    .form-group
+                        label.font-weight-bold.mb-1(for='price') Precio *
+                        small.text-muted.ml-2 - Si no tiene coste se puede poner 0€.
+                        .input-group
+                            .input-group-prepend
+                                .input-group-text €
+                            input#price.form-control.py-4(
+                                required
+                                type='number' 
+                                name='price' 
+                                step="0.01"
+                                min="0.00"
+                                max="10000.00"
+                                value=post.price && post.price
+                                placeholder='Cuánto cuesta la actividad')
+                    .form-group
+                        label.font-weight-bold.mb-1(for='description') Descripción *
+                        textarea#description.form-control(
+                            required
+                            type='text' 
+                            name='description' 
+                            minlength="1"
+                            placeholder='Añade la descripción de la actividad')
+                            =post.description && post.description
+                    .form-group
+                        .form-check.mr-3 
+                            input#pets.form-check-input(
+                                type="checkbox"
+                                name="pets")
+                            label.font-weight-bold.form-check-label(for="pets") Se permiten mascotas
+                    input(type="hidden" name="public" value="false")
+                    input(type="hidden" name="id" value=post._id)
+                    .form-group
+                        a#cancel.btn.btn-outline-danger.mr-2(href="/admin/posts") Cancelar
+                        input#save.btn.btn-outline-info.mr-2(type="submit" onclick="setPublic(false)" value="Guardar")
+                        input#publish.btn.btn-info(type="submit" onclick="setPublic(true)" value="Publicar")
+ 
+append scripts    
+    script(src='/javascripts/validations.js')   
+    
+    script. 
+        if(#{isEditForm}) {
+            const category = "#{post.category}";
+            const pets = "#{post.pets}";
+
+            const options = document.querySelectorAll('#category option');
+            for(let option of options) {
+                if(option.value === category) {
+                    option.selected = true;
+                }
+            }
+            
+            const checkbox = document.querySelector('#pets');
+            if(pets === 'true') {
+                checkbox.checked = true;      
+            } else {
+                checkbox.checked = false;
+            }
+        }
+        
+       function setPublic(isPublic) {  
+           const form = document.getElementById("form-new");
+           form.elements.namedItem('public').value = isPublic.toString();
+       }
