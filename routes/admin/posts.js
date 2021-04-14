@@ -5,7 +5,15 @@ const Post = require('../../models/Post');
 // GET
 //# route => /admin/posts
 router.get('/', function(req, res) {
-    res.render('pages/posts/list', { username: req.cookies.username});
+    Post.find()
+        .then(posts => {
+            res.render('pages/posts/list', {
+                username: req.cookies.username,
+                posts,
+                dayjs
+            });
+        })
+        .catch(error => { error: error.message });
 });
 
 //# route => /admin/posts/new
