@@ -18,6 +18,17 @@ router.get('/edit/:idPost', function(req, res) {
     res.send('Form para editar un post --> ' + req.params.idPost);
 });
 
+//# route => /admin/posts/delete/:idPost
+router.get('/delete/:idPost', function(req, res) {
+    Post.findByIdAndDelete(req.params.idPost)
+        .then(deletedPost => {
+            res.redirect('/admin/posts');
+        })
+        .catch(error => {
+            res.json({ error: error.message })
+        })
+});
+
 // POST
 //# route => /admin/posts/create
 router.post('/create', (req, res) => {
@@ -37,11 +48,6 @@ router.post('/create', (req, res) => {
 //# route => /admin/posts/update
 router.post('/update', function(req, res, next) {
     res.send('Enviar datos del form para editar un post');
-});
-
-//# route => /admin/posts/delete
-router.post('/delete', function(req, res, next) {
-    res.send('Eliminar un post');
 });
 
 module.exports = router;
