@@ -1,0 +1,10 @@
+@host = http://localhost:3000
+
+###
+GET {{host}}/api/posts?limit=0
+
+###
+GET {{host}}/api/posts?limit=5
+
+###
+GET {{host}}/api/posts?limit=5&page=2
