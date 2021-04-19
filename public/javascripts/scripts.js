@@ -14,4 +14,29 @@
         e.preventDefault();
         $("body").toggleClass("sb-sidenav-toggled");
     });
+
+    $(document).ready( function () {
+        $('#dataTable').DataTable({
+            columnDefs: [
+                {
+                    targets: -1,
+                    className: 'display'
+                }
+              ],
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ post por página",
+                "zeroRecords": "No hay resultados",
+                "info": "Mostrando _PAGE_ de _PAGES_ páginas",
+                "infoEmpty": "No hay información disponible",
+                "infoFiltered": "(filtrado por _MAX_ del total)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first":      "Primero",
+                    "last":       "Último",
+                    "next":       "Siguiente",
+                    "previous":   "Anterior"
+                },
+            }    
+        });
+    } );
 })(jQuery);

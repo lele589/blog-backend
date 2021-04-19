@@ -1,0 +1,25 @@
+// Datatable overwrittes
+.page-link {
+    color: #14a3b8;
+
+    &:hover {
+     color: #14a3b8;  
+    }
+   
+    .page-item.active & {
+        border-color: #14a3b8;
+        background-color: #14a3b8;
+    
+    }
+}
+
+.dataTables_info,
+.dataTables_length {
+    color: #999;
+    font-size: 15px;
+}
+
+.dataTables_filter input {
+    background: #efefef;
+    border-radius: 5px;
+}
