@@ -2,9 +2,28 @@
 
 ###
 GET {{host}}/api/posts?limit=0
+Content-Type: application/json
 
 ###
 GET {{host}}/api/posts?limit=5
+Content-Type: application/json
 
 ###
 GET {{host}}/api/posts?limit=5&page=2
+Content-Type: application/json
+
+###
+POST {{host}}/api/posts
+Content-Type: application/json
+
+{
+  "title" : "Ria de VillaviciosaAPI",
+  "category" : "cultura",
+  "image" : "https://picsum.photos/300/200",
+  "location" : "https://goo.gl/maps/xC7Te4bGh7B1gWps7",
+  "price" : "0",
+  "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget faucibus quam. Mauris blandit tortor dolor, at tempor diam congue eget. Etiam libero libero, ultricies a metus sed, suscipit vehicula augue. Etiam lacinia nulla sed augue mollis consectetur. Nunc vulputate aliquam euismod. Fusce pretium ultrices lectus, eu pellentesque nisi mollis ut. Cras non lectus mattis, hendrerit risus in, convallis tortor. Ut elementum velit in arcu iaculis semper. Mauris id massa lorem. In a sem pulvinar, scelerisque eros malesuada, dignissim justo. Donec vel massa a nulla pellentesque elementum quis non leo. Fusce tempus lacus a massa rhoncus commodo. Phasellus volutpat aliquet eros, sit amet vestibulum ipsum dignissim quis.",
+  "pets" : true,
+  "date" : "06/04/2021",
+  "public" : "true"
+}

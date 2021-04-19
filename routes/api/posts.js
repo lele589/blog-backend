@@ -1,5 +1,8 @@
 const router = require('express').Router();
+const mongoosePaginate = require("mongoose-paginate-v2");
+const dayjs = require('dayjs');
 const Post = require('../../models/Post');
+const { formNormalize } = require('../middlewares');
 
 // GET
 //# route => /api/posts
@@ -21,6 +24,19 @@ router.get('/', function(req, res) {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         });
+});
+
+// POST
+//# route => /api/posts
+router.post('/', formNormalize, (req, res) => {
+
+    Post.create(req.body)
+        .then(newPost => {
+            res.json(newPost);
+        })
+        .catch(error => {
+            res.status(error.status).json({ error: error.message })
+        })
 });
 
 module.exports = router;
