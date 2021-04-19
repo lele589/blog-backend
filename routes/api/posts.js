@@ -2,11 +2,12 @@ const router = require('express').Router();
 const mongoosePaginate = require("mongoose-paginate-v2");
 const dayjs = require('dayjs');
 const Post = require('../../models/Post');
-const { formNormalize } = require('../middlewares');
+const { formNormalize, formValidation } = require('../middlewares');
+const { validationResult } = require('express-validator');
 
 // GET
 //# route => /api/posts
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const page = parseInt(req.query.page, 10) || 1;
 
@@ -37,6 +38,27 @@ router.post('/', formNormalize, (req, res) => {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         })
+});
+
+// PUT
+//# route => /api/posts/:idPost
+router.put('/:idPost', formValidation, (req, res) => {
+
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ error: errors.array() });
+    } 
+    
+    req.body.date = dayjs();
+
+    Post.findByIdAndUpdate(req.params.idPost, req.body, { new: true })
+        .then(updatedPost => {
+            res.json(updatedPost);
+        })
+        .catch(error => {
+            res.status(error.status).json({ error: error.message })
+        });
 });
 
 module.exports = router;
