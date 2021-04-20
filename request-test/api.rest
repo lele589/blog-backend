@@ -42,3 +42,7 @@ Content-Type: application/json
   "pets" : false,
   "public" : true
 }
+
+###
+DELETE {{host}}/api/posts/6069f10ca4c4371ce70a5eae
+Content-Type: application/json

@@ -49,7 +49,7 @@ router.put('/:idPost', formValidation, (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(422).json({ error: errors.array() });
     } 
-    
+
     req.body.date = dayjs();
 
     Post.findByIdAndUpdate(req.params.idPost, req.body, { new: true })
@@ -59,6 +59,22 @@ router.put('/:idPost', formValidation, (req, res) => {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         });
+});
+
+// DELETE
+//# route => /api/posts/:idPost
+router.delete('/:idPost', (req, res) => {
+
+    Post.findByIdAndDelete(req.params.idPost)
+        .then(deletedPost => {
+            if(deletedPost) {
+                res.json(deletedPost);
+            }
+            res.status(404).json({ error: 'ID does not exist' });
+        })
+        .catch(error => {
+            res.status(error.status).json({ error: error.message })
+        })
 });
 
 module.exports = router;
