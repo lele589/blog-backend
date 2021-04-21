@@ -33,7 +33,7 @@ router.post('/', formNormalize, (req, res) => {
 
     Post.create(req.body)
         .then(newPost => {
-            res.json(newPost);
+            res.status(201).json(newPost);
         })
         .catch(error => {
             res.status(error.status).json({ error: error.message })
@@ -54,7 +54,10 @@ router.put('/:idPost', formValidation, (req, res) => {
 
     Post.findByIdAndUpdate(req.params.idPost, req.body, { new: true })
         .then(updatedPost => {
-            res.json(updatedPost);
+            if(updatedPost) {
+                res.json(updatedPost);
+            }
+            res.status(404).json({ error: 'ID does not exist' });
         })
         .catch(error => {
             res.status(error.status).json({ error: error.message })
