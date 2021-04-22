@@ -1,31 +1,17 @@
-const router = require('express').Router();
-const User = require('../../models/User');
-const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const dayjs = require('dayjs');
-const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
-//GET
-//# route => /admin/users/login
-router.get('/login', (req, res) => {
+const User = require('../../Models/User');
+
+const getLoginForm = (req, res) => {
     res.render('pages/login');
-});
+};
 
-// POST
-//# route => /admin/users/register
-router.post('/register', [
-    check('username').exists(),
-    check('email').exists().isEmail(),
-    check('email').custom(async value => {
-        const user = await User.findOne({ email: value });
-        if (user) {
-            throw new Error('El email ya existe');
-        } else {
-            return true;
-        }
-    }),
-    check('password').exists().matches(/^([a-zA-Z0-9@*#]{8,15})$/)
-], (req, res) => {
+const getRegisterForm = (req, res) => {
+    res.render('pages/register');
+};
+
+const registerUser = (req, res) => {
 
     const errors = validationResult(req);
 
@@ -34,7 +20,7 @@ router.post('/register', [
     }
 
     req.body.password = bcrypt.hashSync(req.body.password, 10)
-    req.body.rol = 'admin';
+    req.body.role = 'admin';
 
     User.create(req.body)
         .then(newUser => {
@@ -43,11 +29,9 @@ router.post('/register', [
         .catch(error => {
             res.json({ error: 'Se ha producido un error en el registro' })
         })
-});
+};
 
-// POST
-//# route => /admin/users/login
-router.post('/login', (req, res) => {
+const loginUser = (req, res) => {
     const { email, password } = req.body;
     if(email && password) {
         User.findOne({ email: email })
@@ -70,14 +54,11 @@ router.post('/login', (req, res) => {
     } else {
         res.render('pages/login', { error: 'Debes rellenar los campos' });
     }
-});
+};
 
-function createToken(user) {
-  const payload = {
-      userId: user._id,
-      expire: dayjs().add(30, 'minutes').unix(),
-  }
-  return jwt.sign(payload, process.env.SECRET_KEY);
+module.exports = {
+    getLoginForm,
+    getRegisterForm,
+    registerUser,
+    loginUser
 }
-
-module.exports = router;

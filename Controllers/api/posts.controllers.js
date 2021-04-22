@@ -1,13 +1,9 @@
-const router = require('express').Router();
-const mongoosePaginate = require("mongoose-paginate-v2");
 const dayjs = require('dayjs');
-const Post = require('../../models/Post');
-const { formNormalize, formValidation } = require('../middlewares');
 const { validationResult } = require('express-validator');
 
-// GET
-//# route => /api/posts
-router.get('/', (req, res) => {
+const Post = require('../../Models/Post');
+
+const getPostList = (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const page = parseInt(req.query.page, 10) || 1;
 
@@ -25,11 +21,9 @@ router.get('/', (req, res) => {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         });
-});
+};
 
-// POST
-//# route => /api/posts
-router.post('/', formNormalize, (req, res) => {
+const createPost = (req, res) => {
 
     Post.create(req.body)
         .then(newPost => {
@@ -38,13 +32,10 @@ router.post('/', formNormalize, (req, res) => {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         })
-});
+};
 
-// PUT
-//# route => /api/posts/:idPost
-router.put('/:idPost', formValidation, (req, res) => {
+const editPost = (req, res) => {
 
-    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ error: errors.array() });
@@ -62,11 +53,9 @@ router.put('/:idPost', formValidation, (req, res) => {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         });
-});
+};
 
-// DELETE
-//# route => /api/posts/:idPost
-router.delete('/:idPost', (req, res) => {
+const deletePost = (req, res) => {
 
     Post.findByIdAndDelete(req.params.idPost)
         .then(deletedPost => {
@@ -78,6 +67,11 @@ router.delete('/:idPost', (req, res) => {
         .catch(error => {
             res.status(error.status).json({ error: error.message })
         })
-});
+};
 
-module.exports = router;
+module.exports = {
+    getPostList,
+    createPost,
+    editPost,
+    deletePost
+}

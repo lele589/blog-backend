@@ -1,11 +1,7 @@
-const router = require('express').Router();
+const Post = require('../../Models/Post');
 const dayjs = require('dayjs');
-const Post = require('../../models/Post');
-const { formNormalize } = require('../middlewares');
 
-// GET
-//# route => /admin/posts
-router.get('/', function(req, res) {
+const getPostList = (req, res) => {
 
     Post.find()
         .then(posts => {
@@ -16,20 +12,18 @@ router.get('/', function(req, res) {
             });
         })
         .catch(error => { error: error.message });
-});
+};
 
-//# route => /admin/posts/new
-router.get('/new', function(req, res) {
+const getNewPostForm = (req, res) => {
 
     res.render('pages/posts/form', { 
         post: {},
         title: 'Crear post',
         postUrl: '/admin/posts/create'
     });
-});
+};
 
-//# route => /admin/posts/edit/:idPost
-router.get('/edit/:idPost', function(req, res) {
+const getEditPostForm = (req, res) => {
     
     Post.findById(req.params.idPost)
         .then(post => {
@@ -54,10 +48,9 @@ router.get('/edit/:idPost', function(req, res) {
             
         })
         .catch(error => console.log(error));
-});
+};
 
-//# route => /admin/posts/delete/:idPost
-router.get('/delete/:idPost', function(req, res) {
+const deletePost = (req, res) => {
 
     Post.findByIdAndDelete(req.params.idPost)
         .then(deletedPost => {
@@ -66,11 +59,9 @@ router.get('/delete/:idPost', function(req, res) {
         .catch(error => {
             res.json({ error: error.message })
         })
-});
+};
 
-// POST
-//# route => /admin/posts/create
-router.post('/create', formNormalize, (req, res) => {
+const createPost = (req, res) => {
 
     Post.create(req.body)
         .then(newPost => {
@@ -79,10 +70,9 @@ router.post('/create', formNormalize, (req, res) => {
         .catch(error => {
             res.json({ error: error.message })
         })
-});
+};
 
-//# route => /admin/posts/update
-router.post('/update', formNormalize, (req, res) => {
+const updatePost = (req, res) => {
 
     Post.findByIdAndUpdate(req.body.id, req.body, { new: true })
         .then(editedPost => {
@@ -91,11 +81,13 @@ router.post('/update', formNormalize, (req, res) => {
         .catch(error => {
             res.json({ error: error.message })
         })
-});
+};
 
-//# route => /admin/posts/update
-router.post('/update', function(req, res, next) {
-    res.send('Enviar datos del form para editar un post');
-});
-
-module.exports = router;
+module.exports = {
+    getPostList,
+    getNewPostForm,
+    getEditPostForm,
+    deletePost,
+    createPost,
+    updatePost
+}

@@ -7,9 +7,8 @@ const sassMiddleware = require('node-sass-middleware');
 
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
-const adminRouter = require('./routes/admin');
-const apiRouter = require('./routes/api');
+const adminRouter = require('./Routes/admin.routes');
+const apiRouter = require('./Routes/api.routes');
 
 require('./dbConfig');
 
@@ -39,7 +38,6 @@ app.use(sassMiddleware({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/api', apiRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const postsAdminRouter = require('./admin/posts');
-const usersAdminRouter = require('./admin/users');
+const postsAdminRouter = require('./admin/posts.routes');
+const usersAdminRouter = require('./admin/users.routes');
 
 // GET
 //# route => /admin

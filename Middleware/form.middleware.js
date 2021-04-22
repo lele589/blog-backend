@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
 const dayjs = require('dayjs');
 const { check } = require('express-validator');
 
-const formNormalize = (req, res, next) => {
+const User = require('../Models/User');
+
+const formNormalizePost = (req, res, next) => {
     req.body.public === 'true' ? req.body.public = true : req.body.public = false
     req.body.pets === 'on' ? req.body.pets = true : req.body.pets = false
     req.body.date = dayjs();
@@ -10,7 +11,7 @@ const formNormalize = (req, res, next) => {
     next();
 }
 
-const formValidation = [
+const formValidationPost = [
     check('title', 'El campo "título" es obligatorio').exists().trim(),
     check('category', 'El campo "categoría" es obligatorio').exists().trim(),
     check('image', 'El campo "imagen" debe tener el formato correcto de URL').isURL().optional().trim(),
@@ -21,7 +22,22 @@ const formValidation = [
     check('public', 'El campo "publicar" es obligatorio y debe ser un buleano').isBoolean(),
 ]
 
+const formValidationUser = [
+    check('username').exists(),
+    check('email').exists().isEmail(),
+    check('email').custom(async value => {
+        const user = await User.findOne({ email: value });
+        if (user) {
+            throw new Error('El email ya existe');
+        } else {
+            return true;
+        }
+    }),
+    check('password').exists().matches(/^([a-zA-Z0-9@*#]{8,15})$/)
+]
+
 module.exports = {
-    formNormalize,
-    formValidation
+    formNormalizePost,
+    formValidationPost,
+    formValidationUser
 }
