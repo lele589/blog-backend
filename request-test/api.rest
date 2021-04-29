@@ -9,6 +9,14 @@ GET {{host}}/api/posts/6069daf0f08a3b1801b15bcf
 Content-Type: application/json
 
 ###
+GET {{host}}/api/posts?category=cultura
+Content-Type: application/json
+
+###
+GET {{host}}/api/posts?orderBy=-date
+Content-Type: application/json
+
+###
 GET {{host}}/api/posts?limit=5
 Content-Type: application/json
 

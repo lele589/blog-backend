@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
         "version": "1.0.0",
-        "title": "Blog API",
-        "description": "Blog Project Application API",
+        "title": "'Expedición Norte' API",
+        "description": "Project Application API",
         "license": {
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
@@ -28,7 +28,7 @@
         "/posts": {
             "get": {
                 "tags": ["Posts"],
-                "summary": "Get all posts in system with pagination (dafault => limit=10, page=1)",
+                "summary": "Get all posts in system with pagination (default => limit=10, page=1)",
                 "responses": {
                     "200": {
                     "description": "success",
@@ -37,7 +37,47 @@
                         "$ref": "#/definitions/Post"
                     }
                     }
-                }
+                },
+                "parameters": [
+                  {
+                    "name": "limit",
+                    "in": "query",
+                    "default": 10,
+                    "description": "The numbers of posts to return per page",
+                    "schema": {
+                      "type": "integer"
+                    },
+                    "required": false
+                  },
+                  {
+                    "name": "page",
+                    "in": "query",
+                    "default": 1,
+                    "description": "The number of page to show",
+                    "schema": {
+                      "type": "integer"
+                    },
+                    "required": false
+                  },
+                  {
+                    "name": "category",
+                    "in": "query",
+                    "description": "The category name to filter results (deporte / ruta / gastronomia / cultura)",
+                    "schema": {
+                      "type": "string",
+                      "enum":["deporte", "ruta", "gastronomia", "cultura"]
+                    }
+                  },
+                  {
+                    "name": "orderBy",
+                    "in": "query",
+                    "description": "The property name to order results (desc = '-date', asc = 'date')",
+                    "schema": {
+                      "type": "string",
+                      "$ref": "#/definitions/Post"
+                    }
+                  }
+                ]
             },
             "post": {
                 "tags": ["Posts"],
@@ -72,6 +112,19 @@
                   "type": "integer"
                 }
               ],
+             "get": {
+                "tags": ["Posts"],
+                "summary": "Get a post with given ID",
+                "responses": {
+                    "200": {
+                    "description": "success",
+                    "schema": {
+                        "type": "array",
+                        "$ref": "#/definitions/Post"
+                    }
+                    }
+                }
+            },  
             "put": {
                 "tags": ["Posts"],
                 "summary": "Edit a post with given ID",

@@ -6,6 +6,22 @@ const Post = require('../../Models/Post');
 const getPostList = (req, res) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const page = parseInt(req.query.page, 10) || 1;
+    const category = req.query.category || null;
+    const orderBy = req.query.orderBy || null
+    const query = {};
+
+    if(orderBy) {
+        if (orderBy.indexOf('-')) {
+            orderBy[orderBy.replace('-','')] = -1
+        } else {
+            orderBy[orderBy] = 1
+        }
+    }
+
+    const categories = ['deporte', 'ruta', 'cultura', 'gastronomia'];
+    if (categories.includes(category)) {
+        query.category = category
+    }
 
     const customLabels = {
         totalDocs: 'totalResults',
@@ -13,8 +29,8 @@ const getPostList = (req, res) => {
         page: 'currentPage',
         limit: 'perPage',
     };
-    
-    Post.paginate({}, {limit, page, customLabels})
+
+    Post.paginate(query, {limit, page, customLabels, sort: orderBy})
         .then(posts => {
             res.status(200).json(posts);
         })
