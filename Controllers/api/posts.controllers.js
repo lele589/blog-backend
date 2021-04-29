@@ -23,6 +23,21 @@ const getPostList = (req, res) => {
         });
 };
 
+const getPostById = (req, res) => {
+
+    Post.findById(req.params.idPost)
+        .then(post => {
+            if(post) {
+                res.status(200).json(post);
+            } else {
+                res.status(404).json({ error: 'ID does not exist' });
+            }
+        })
+        .catch(error => {
+            res.json({ error: error.message })
+        });
+};
+
 const createPost = (req, res) => {
 
     Post.create(req.body)
@@ -47,8 +62,9 @@ const editPost = (req, res) => {
         .then(updatedPost => {
             if(updatedPost) {
                 res.json(updatedPost);
+            } else {
+                res.status(404).json({ error: 'ID does not exist' });
             }
-            res.status(404).json({ error: 'ID does not exist' });
         })
         .catch(error => {
             res.status(error.status).json({ error: error.message })
@@ -61,8 +77,9 @@ const deletePost = (req, res) => {
         .then(deletedPost => {
             if(deletedPost) {
                 res.json(deletedPost);
+            } else {
+                res.status(404).json({ error: 'ID does not exist' });
             }
-            res.status(404).json({ error: 'ID does not exist' });
         })
         .catch(error => {
             res.status(error.status).json({ error: error.message })
@@ -71,6 +88,7 @@ const deletePost = (req, res) => {
 
 module.exports = {
     getPostList,
+    getPostById,
     createPost,
     editPost,
     deletePost

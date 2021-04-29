@@ -1,7 +1,11 @@
 @host = http://localhost:3000
 
 ###
-GET {{host}}/api/posts?limit=0
+GET {{host}}/api/posts
+Content-Type: application/json
+
+###
+GET {{host}}/api/posts/6069daf0f08a3b1801b15bcf
 Content-Type: application/json
 
 ###

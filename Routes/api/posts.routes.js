@@ -6,6 +6,9 @@ const postsControllers = require('../../Controllers/api/posts.controllers');
 //# route => /api/posts
 router.get('/', postsControllers.getPostList);
 
+//# route => /api/posts/:idPost
+router.get('/:idPost', postsControllers.getPostById);
+
 // POST
 //# route => /api/posts
 router.post('/', formNormalizePost, postsControllers.createPost);
