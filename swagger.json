@@ -159,6 +159,55 @@
                   }
                 }
               }
+        },
+        "/users/register": {
+          "post": {
+            "tags": ["Users"],
+            "summary": "Create a User in system",
+            "responses": {
+              "200": {
+                "description": "User is created",
+                "schema": {
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": ["admin", "user"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/users/login": {
+          "post": {
+            "tags": ["Users"],
+            "summary": "Log in a User in system",
+            "responses": {
+              "200": {
+                "description": "User is logged",
+                "schema": {
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
     },
     "definitions": {
@@ -188,7 +237,7 @@
             }
           }
         },
-        "Users": {
+        "User": {
             "required": ["username", "email", "password", "role"],
             "properties": {
               "username": {

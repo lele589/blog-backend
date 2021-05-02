@@ -58,3 +58,22 @@ Content-Type: application/json
 ###
 DELETE {{host}}/api/posts/6069f10ca4c4371ce70a5eae
 Content-Type: application/json
+
+###
+POST {{host}}/api/users/login
+Content-Type: application/json
+
+{
+  "email" : "admin@admin.com",
+  "password" : "admin123"
+}
+
+###
+POST {{host}}/api/users/register
+Content-Type: application/json
+
+{
+  "username" : "User2",
+  "email" : "user2@user.com",
+  "password" : "user1234"
+}
